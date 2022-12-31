@@ -10,20 +10,16 @@ app.use(bodyParser.urlencoded({ extended: true })); // Required to parse request
 app.use(express.static("static"));
 
 app.get("/", function (req, res) {
-  const day = [
-    { name: "Sunday", color: "black" },
-    { name: "Monday", color: "red" },
-    { name: "Tuesday", color: "green" },
-    { name: "Wednesday", color: "yellor" },
-    { name: "Thursday", color: "purple" },
-    { name: "Friday", color: "grey" },
-    { name: "Saturday", color: "brown" },
-  ][new Date().getDay()];
+  const today = new Date();
+  const dayString = today.toLocaleDateString("es-AR", {
+	weekday: "long",
+	hour12: false,
+	day: "numeric",
+	month: "long",
+	year: "numeric"
+  })
 
-  res.render("list", {
-    day: day.name,
-    color: day.color,
-  });
+  res.render("list", { dayString: dayString });
 });
 
 const port = process.env.PORT;
