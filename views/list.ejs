@@ -25,15 +25,25 @@
 			<main class="form-newItem">
 				<form action="/" method="post">
 					<div class="form-floating">
-						<input type="text" name="newItem" class="form-control top" placeholder="Write something..."
+						<input type="text" name="newItem" class="form-control top" placeholder="Write something to do..."
 							required autofocus>
-						<label for="newItem">Write something...</label>
+						<label for="newItem">Write something to do...</label>
 					</div>
-					<button class="w-100 btn btn-lg btn-primary" type="submit">Save</button>
+					<button class="w-100 btn btn-lg btn-primary" type="submit">Add To-Do</button>
 				</form>
 			</main>
 		</div>
 	</div>
+
+	<% if (toDoItems !==[]) { %>
+		<div>
+			<ul>
+				<% toDoItems.forEach(function(item) { %>
+					<li><%= item %></li>
+				<% }) %>
+			</ul>
+		</div>
+	<% } %>
 
 	<!-- Bootstrap JS -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
