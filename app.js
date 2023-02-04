@@ -11,17 +11,31 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true })); // Required to parse requests
 app.use(express.static("static"));
 
-app.get("/", function (req, res) {
-  const today = new Date();
-  const dayString = today.toLocaleDateString("es-AR", {
-    weekday: "long",
-    hour12: false,
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+var toDoItems = [];
+var today = new Date();
+var dayString = today.toLocaleDateString("es-AR", {
+  weekday: "long",
+  hour12: false,
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
 
-  res.render("list", { dayString: dayString });
+app.get("/", function (req, res) {
+  res.render("list", {
+    dayString: dayString,
+    toDoItems: toDoItems,
+  });
+});
+
+app.post("/", function (req, res) {
+  const newItem = req.body.newItem;
+  toDoItems.push(newItem);
+
+  res.render("list", {
+    dayString: dayString,
+    toDoItems: toDoItems,
+  });
 });
 
 const hostname = process.env.HOST || "localhost";
