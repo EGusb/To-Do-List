@@ -47,6 +47,7 @@ app.post("/", function (req, res) {
 
 const hostname = process.env.HOST || "localhost";
 
+// HTTP config
 const http_port = process.env.HTTP_PORT || 80;
 const http_server = http.createServer(app);
 
@@ -55,6 +56,7 @@ const options = {
   cert: fs.readFileSync("./server.cert"),
 };
 
+// HTTPS config
 const https_port = process.env.HTTPS_PORT || 443;
 const https_server = https.createServer(options, app);
 
