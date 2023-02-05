@@ -11,8 +11,8 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true })); // Required to parse requests
 app.use(express.static("static"));
 
-var toDoItems = [];
-var dayString = new Date().toLocaleDateString("es-AR", {
+let toDoItems = [];
+let dayString = new Date().toLocaleDateString("es-AR", {
   weekday: "long",
   hour12: false,
   day: "numeric",
