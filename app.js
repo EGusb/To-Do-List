@@ -11,23 +11,29 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true })); // Required to parse requests
 app.use(express.static("static"));
 
-let toDoItems = [];
 const dateModule = require(__dirname + "/date.js");
+const models = require(__dirname + "/models.js");
+const Item = models.Item;
 
 app.get("/", function (req, res) {
-  res.render("list", {
-    dayString: dateModule.dayString(),
-    toDoItems: toDoItems,
+  Item.find({}, function (err, docs) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("list", {
+        dayString: dateModule.dayString(),
+        toDoItems: docs,
+      });
+    }
   });
 });
 
 app.post("/", function (req, res) {
-  const newItem = req.body.newItem;
-  toDoItems.push(newItem);
+  Item.create({ name: req.body.newItem });
 
   res.render("list", {
     dayString: dateModule.dayString(),
-    toDoItems: toDoItems,
+    toDoItems: Item.find().exec(),
   });
 });
 
@@ -37,12 +43,12 @@ const hostname = process.env.HOST || "localhost";
 const http_port = process.env.HTTP_PORT || 80;
 const http_server = http.createServer(app);
 
+// HTTPS config
 const options = {
   key: fs.readFileSync("./server.key"),
   cert: fs.readFileSync("./server.cert"),
 };
 
-// HTTPS config
 const https_port = process.env.HTTPS_PORT || 443;
 const https_server = https.createServer(options, app);
 
