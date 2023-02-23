@@ -14,6 +14,7 @@ app.use(express.static("static"));
 const dateModule = require(__dirname + "/date.js");
 const models = require(__dirname + "/models.js");
 const Item = models.Item;
+const List = models.List;
 
 app.get("/", function (req, res) {
   Item.find({}, function (err, docs) {

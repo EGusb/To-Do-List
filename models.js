@@ -11,6 +11,16 @@ const itemSchema = {
   },
 };
 
+const listSchema = {
+  name: {
+    type: String,
+    required: [true, "The list must have a name!"],
+  },
+  items: [itemSchema],
+};
+
 const Item = mongoose.model("Item", itemSchema);
+const List = mongoose.model("List", listSchema);
 
 exports.Item = Item;
+exports.List = List;
