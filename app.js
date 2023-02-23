@@ -5,6 +5,7 @@ const https = require("https");
 const fs = require("fs");
 const express = require("express");
 const bodyParser = require("body-parser");
+const _ = require("lodash");
 
 const app = express();
 app.set("view engine", "ejs");
@@ -20,13 +21,10 @@ app.get("/", function (req, res) {
   Item.find({}, function (err, docs) {
     if (err) {
       console.log(err);
-      res.render("error", {
-        dayString: dateModule.dayString(),
-        error: err,
-      });
+      res.render("error", { error: err });
     } else {
       res.render("list", {
-        dayString: dateModule.dayString(),
+        listTitle: dateModule.dayString(),
         toDoItems: docs,
       });
     }
@@ -39,32 +37,40 @@ app.post("/", function (req, res) {
   Item.find({}, function (err, docs) {
     if (err) {
       console.log(err);
-      res.render("error", {
-        dayString: dateModule.dayString(),
-        error: err,
-      });
+      res.render("error", { error: err });
     } else {
       res.redirect("/");
+    }
+  });
+});
+
+app.get("/:listName", function (req, res) {
+  const listName = _.capitalize(req.params.listName);
+
+  Item.find({}, function (err, docs) {
+    if (err) {
+      console.log(err);
+      res.render("error", { error: err });
+    } else {
+      res.render("list", {
+        listTitle: listName,
+        toDoItems: docs,
+      });
     }
   });
 });
 
 app.post("/delete", function (req, res) {
   const checkedItemId = req.body.itemCheckBox;
-  Item.findByIdAndRemove(checkedItemId, function (err) {    
+  Item.findByIdAndRemove(checkedItemId, function (err) {
     if (err) {
       console.log(err);
-      res.render("error", {
-        dayString: dateModule.dayString(),
-        error: err,
-      });
+      res.render("error", { error: err });
     } else {
       res.redirect("/");
     }
   });
 });
-
-const hostname = process.env.HOST || "localhost";
 
 // HTTP config
 const http_port = process.env.HTTP_PORT || 80;
@@ -78,6 +84,8 @@ const options = {
 
 const https_port = process.env.HTTPS_PORT || 443;
 const https_server = https.createServer(options, app);
+
+const hostname = process.env.HOST || "localhost";
 
 http_server.listen(http_port, hostname, function () {
   console.log(`HTTP server started on http://${hostname}:${http_port}`);
