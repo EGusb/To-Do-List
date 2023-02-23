@@ -12,25 +12,11 @@ app.use(bodyParser.urlencoded({ extended: true })); // Required to parse request
 app.use(express.static("static"));
 
 let toDoItems = [];
-let dayString = new Date().toLocaleDateString("es-AR", {
-  weekday: "long",
-  hour12: false,
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-});
+const dateModule = require(__dirname + "/date.js");
 
 app.get("/", function (req, res) {
-  dayString = new Date().toLocaleDateString("es-AR", {
-    weekday: "long",
-    hour12: false,
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-
   res.render("list", {
-    dayString: dayString,
+    dayString: dateModule.dayString(),
     toDoItems: toDoItems,
   });
 });
@@ -40,7 +26,7 @@ app.post("/", function (req, res) {
   toDoItems.push(newItem);
 
   res.render("list", {
-    dayString: dayString,
+    dayString: dateModule.dayString(),
     toDoItems: toDoItems,
   });
 });
