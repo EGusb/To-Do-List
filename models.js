@@ -19,8 +19,5 @@ const listSchema = {
   items: [itemSchema],
 };
 
-const Item = mongoose.model("Item", itemSchema);
-const List = mongoose.model("List", listSchema);
-
-exports.Item = Item;
-exports.List = List;
+//exports.Item = mongoose.model("Item", itemSchema);
+exports.List = mongoose.model("List", listSchema);
