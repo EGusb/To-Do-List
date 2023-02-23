@@ -48,6 +48,21 @@ app.post("/", function (req, res) {
   });
 });
 
+app.post("/delete", function (req, res) {
+  const checkedItemId = req.body.itemCheckBox;
+  Item.findByIdAndRemove(checkedItemId, function (err) {    
+    if (err) {
+      console.log(err);
+      res.render("error", {
+        dayString: dateModule.dayString(),
+        error: err,
+      });
+    } else {
+      res.redirect("/");
+    }
+  });
+});
+
 const hostname = process.env.HOST || "localhost";
 
 // HTTP config
