@@ -5,12 +5,12 @@
 </div>
 
 <div class="box">
-  <% if (toDoItems !==[]) { %> <% toDoItems.forEach(function(item) { %>
+  <% toDoItems.forEach(function(item) { %>
   <div class="item">
     <input type="checkbox" />
-    <p><%= item %></p>
+    <p><%= item.name %></p>
   </div>
-  <% }) %> <% } %>
+  <% }) %>
 
   <form class="item" action="/" method="post">
     <input
