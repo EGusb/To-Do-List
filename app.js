@@ -19,6 +19,10 @@ app.get("/", function (req, res) {
   Item.find({}, function (err, docs) {
     if (err) {
       console.log(err);
+      res.render("error", {
+        dayString: dateModule.dayString(),
+        error: err,
+      });
     } else {
       res.render("list", {
         dayString: dateModule.dayString(),
@@ -31,9 +35,16 @@ app.get("/", function (req, res) {
 app.post("/", function (req, res) {
   Item.create({ name: req.body.newItem });
 
-  res.render("list", {
-    dayString: dateModule.dayString(),
-    toDoItems: Item.find().exec(),
+  Item.find({}, function (err, docs) {
+    if (err) {
+      console.log(err);
+      res.render("error", {
+        dayString: dateModule.dayString(),
+        error: err,
+      });
+    } else {
+      res.redirect("/");
+    }
   });
 });
 
