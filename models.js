@@ -23,5 +23,5 @@ const listSchema = {
   items: [itemSchema],
 };
 
-exports.Item = mongoose.model("Item", itemSchema);
+//exports.Item = mongoose.model("Item", itemSchema);
 exports.List = mongoose.model("List", listSchema);

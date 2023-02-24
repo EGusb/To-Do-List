@@ -13,7 +13,6 @@ app.use(bodyParser.urlencoded({ extended: true })); // Required to parse request
 app.use(express.static("static"));
 
 const models = require(__dirname + "/models.js");
-const Item = models.Item;
 const List = models.List;
 
 function slugify(name) {
