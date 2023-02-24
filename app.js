@@ -115,6 +115,28 @@ app.post("/:listSlug", function (req, res) {
   );
 });
 
+app.post("/:listSlug/delete", function (req, res) {
+  const itemId = req.body.itemId;
+  const listSlug = req.params.listSlug;
+
+  List.findOneAndUpdate(
+    { slug: listSlug },
+    { $pull: { items: { _id: itemId } } },
+    function (err, list) {
+      if (err) {
+        console.log(err);
+        res.render("error", { error: err });
+      } else {
+        if (list) {
+          res.redirect(`/${listSlug}`);
+        } else {
+          res.redirect("/");
+        }
+      }
+    }
+  );
+});
+
 // HTTP config
 const http_port = process.env.HTTP_PORT || 80;
 const http_server = http.createServer(app);
