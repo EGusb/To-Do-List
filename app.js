@@ -12,57 +12,74 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true })); // Required to parse requests
 app.use(express.static("static"));
 
-const dateModule = require(__dirname + "/date.js");
 const models = require(__dirname + "/models.js");
-const Item = models.Item;
+//const Item = models.Item;
 const List = models.List;
 
+function processListName(name) {
+  return _.startCase(_.kebabCase(_.toLower(_.deburr(name))));
+}
+
 app.get("/", function (req, res) {
-  Item.find({}, function (err, docs) {
+  List.find({}, function (err, docs) {
     if (err) {
       console.log(err);
       res.render("error", { error: err });
     } else {
-      res.render("list", {
-        listTitle: dateModule.dayString(),
-        toDoItems: docs,
+      res.render("home", {
+        lists: docs,
       });
     }
   });
 });
 
 app.post("/", function (req, res) {
-  Item.create({ name: req.body.newItem });
+  const newList = processListName(req.body.newList);
 
-  Item.find({}, function (err, docs) {
+  List.findOne({ name: newList }, function (err, list) {
     if (err) {
       console.log(err);
       res.render("error", { error: err });
     } else {
-      res.redirect("/");
+      if (list) {
+        res.redirect("/");
+      } else {
+        List.create({ name: newList, items: [] }, function (err, docs) {
+          if (err) {
+            console.log(err);
+            res.render("error", { error: err });
+          } else {
+            res.redirect("/");
+          }
+        });
+      }
     }
   });
 });
 
 app.get("/:listName", function (req, res) {
-  const listName = _.capitalize(req.params.listName);
+  const listName = processListName(req.params.listName);
 
-  Item.find({}, function (err, docs) {
+  List.findOne({ name: listName }, function (err, list) {
     if (err) {
       console.log(err);
       res.render("error", { error: err });
     } else {
-      res.render("list", {
-        listTitle: listName,
-        toDoItems: docs,
-      });
+      if (list) {
+        res.render("list", {
+          listTitle: list.name,
+          listItems: list.items,
+        });
+      } else {
+        res.redirect("/");
+      }
     }
   });
 });
 
 app.post("/delete", function (req, res) {
   const checkedItemId = req.body.itemCheckBox;
-  Item.findByIdAndRemove(checkedItemId, function (err) {
+  List.findByIdAndRemove(checkedItemId, function (err) {
     if (err) {
       console.log(err);
       res.render("error", { error: err });
