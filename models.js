@@ -16,6 +16,10 @@ const listSchema = {
     type: String,
     required: [true, "The list must have a name!"],
   },
+  slug: {
+    type: String,
+    required: [true, "The slug must not be blank!"],
+  },
   items: [itemSchema],
 };
 
