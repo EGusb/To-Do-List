@@ -1,11 +1,11 @@
 <%- include("header"); -%>
 
 <div class="box" id="heading">
-  <h1><%= listTitle %></h1>
+  <h1><%= list.name %></h1>
 </div>
 
 <div class="box">
-  <% listItems.forEach(function(item) { %>
+  <% list.items.forEach(function(item) { %>
   <form action="/delete" method="post">
     <div class="item">
       <input
@@ -19,15 +19,16 @@
   </form>
   <% }) %>
 
-  <form class="item" action="/" method="post">
+  <form class="item" action="/<%= list.slug %>" method="post">
     <input
       type="text"
-      name="newItem"
+      name="newItemName"
       placeholder="New Item"
-      required
+      required      
+      autofocus
       autocomplete="off"
     />
-    <button type="submit" name="button">+</button>
+    <button type="submit" name="listSlug" value="<%= list.slug %>">+</button>
   </form>
 </div>
 

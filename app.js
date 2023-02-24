@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // Required to parse request
 app.use(express.static("static"));
 
 const models = require(__dirname + "/models.js");
-//const Item = models.Item;
+const Item = models.Item;
 const List = models.List;
 
 function slugify(name) {
@@ -65,26 +65,6 @@ app.post("/", function (req, res) {
   });
 });
 
-app.get("/:listSlug", function (req, res) {
-  const listSlug = req.params.listSlug;
-
-  List.findOne({ slug: listSlug }, function (err, list) {
-    if (err) {
-      console.log(err);
-      res.render("error", { error: err });
-    } else {
-      if (list) {
-        res.render("list", {
-          listTitle: list.name,
-          listItems: list.items,
-        });
-      } else {
-        res.redirect("/");
-      }
-    }
-  });
-});
-
 app.post("/delete", function (req, res) {
   const checkedListId = req.body.listCheckBox;
   List.findByIdAndRemove(checkedListId, function (err) {
@@ -95,6 +75,45 @@ app.post("/delete", function (req, res) {
       res.redirect("/");
     }
   });
+});
+
+app.get("/:listSlug", function (req, res) {
+  const listSlug = req.params.listSlug;
+
+  List.findOne({ slug: listSlug }, function (err, list) {
+    if (err) {
+      console.log(err);
+      res.render("error", { error: err });
+    } else {
+      if (list) {
+        res.render("list", { list: list });
+      } else {
+        res.redirect("/");
+      }
+    }
+  });
+});
+
+app.post("/:listSlug", function (req, res) {
+  const newItemName = req.body.newItemName;
+  const listSlug = req.params.listSlug;
+
+  List.findOneAndUpdate(
+    { slug: listSlug },
+    { $push: { items: { name: newItemName } } },
+    function (err, list) {
+      if (err) {
+        console.log(err);
+        res.render("error", { error: err });
+      } else {
+        if (list) {
+          res.redirect(`/${listSlug}`);
+        } else {
+          res.redirect("/");
+        }
+      }
+    }
+  );
 });
 
 // HTTP config
