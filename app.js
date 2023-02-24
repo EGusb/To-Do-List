@@ -86,8 +86,8 @@ app.get("/:listSlug", function (req, res) {
 });
 
 app.post("/delete", function (req, res) {
-  const checkedItemId = req.body.itemCheckBox;
-  List.findByIdAndRemove(checkedItemId, function (err) {
+  const checkedListId = req.body.listCheckBox;
+  List.findByIdAndRemove(checkedListId, function (err) {
     if (err) {
       console.log(err);
       res.render("error", { error: err });
