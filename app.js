@@ -16,8 +16,8 @@ const models = require(__dirname + "/models.js");
 //const Item = models.Item;
 const List = models.List;
 
-function processListName(name) {
-  return _.startCase(_.kebabCase(_.toLower(_.deburr(name))));
+function slugify(name) {
+  return _.kebabCase(_.toLower(_.deburr(name)));
 }
 
 app.get("/", function (req, res) {
@@ -34,9 +34,10 @@ app.get("/", function (req, res) {
 });
 
 app.post("/", function (req, res) {
-  const newList = processListName(req.body.newList);
+  const newListName = req.body.newListName;
+  const newListSlug = slugify(newListName);
 
-  List.findOne({ name: newList }, function (err, list) {
+  List.findOne({ slug: newListSlug }, function (err, list) {
     if (err) {
       console.log(err);
       res.render("error", { error: err });
@@ -44,23 +45,30 @@ app.post("/", function (req, res) {
       if (list) {
         res.redirect("/");
       } else {
-        List.create({ name: newList, items: [] }, function (err, docs) {
-          if (err) {
-            console.log(err);
-            res.render("error", { error: err });
-          } else {
-            res.redirect("/");
+        List.create(
+          {
+            name: newListName,
+            slug: newListSlug,
+            items: [],
+          },
+          function (err, doc) {
+            if (err) {
+              console.log(err);
+              res.render("error", { error: err });
+            } else {
+              res.redirect("/");
+            }
           }
-        });
+        );
       }
     }
   });
 });
 
-app.get("/:listName", function (req, res) {
-  const listName = processListName(req.params.listName);
+app.get("/:listSlug", function (req, res) {
+  const listSlug = req.params.listSlug;
 
-  List.findOne({ name: listName }, function (err, list) {
+  List.findOne({ slug: listSlug }, function (err, list) {
     if (err) {
       console.log(err);
       res.render("error", { error: err });
