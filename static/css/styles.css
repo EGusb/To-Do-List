@@ -36,6 +36,14 @@ h1 {
   transform: translate(-50%, -50%);
 }
 
+.edit-name {
+  font-size: 2.5rem;
+  left: calc(50% + 250px);
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .item {
   min-height: 70px;
   display: flex;
