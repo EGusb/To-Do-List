@@ -14,7 +14,7 @@
         value="<%= list._id %>"
         onChange="this.form.submit()"
       />
-      <p><a href="/<%= list.slug %>"><%= list.name %></a> - <%= list.items.length %> items</p>
+      <p><a href="/<%= list.slug %>"><%= list.name %></a> (<%= list.items.length %>)</p>
     </div>
   </form>
   <% }) %>
