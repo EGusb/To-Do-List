@@ -5,26 +5,30 @@
 </div>
 
 <div class="box">
-  <% lists.forEach(function(list) { %>
-  <form action="/delete" method="post">
-    <div class="item">
-      <input
-        type="checkbox"
-        name="listCheckBox"
-        value="<%= list._id %>"
-        onChange="this.form.submit()"
-      />
-      <p><a href="/<%= list.slug %>"><%= list.name %></a> (<%= list.items.length %>)</p>
-    </div>
-  </form>
-  <% }) %>
+  <div class="container-fluid">
+    <% lists.forEach(function(list) { %>
+    <form action="/delete" method="post">
+      <div class="item row">
+        <input
+          type="checkbox"
+          name="listCheckBox"
+          value="<%= list._id %>"
+          onChange="this.form.submit()"
+          class="col-1"
+        />
+        <p class="col-8"><a href="/<%= list.slug %>"><%= list.name %></a></p>
+        <p class="col-1">(<%= list.items.length %>)</p>
+      </div>
+    </form>
+    <% }) %>
+  </div>
 
   <form class="item" action="/" method="post">
     <input
       type="text"
       name="newListName"
       placeholder="New List"
-      required      
+      required
       autofocus
       autocomplete="off"
     />
