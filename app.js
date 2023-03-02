@@ -19,11 +19,24 @@ function slugify(name) {
   return _.kebabCase(_.toLower(_.deburr(name)));
 }
 
+function renderErrorPage(res, err, statusCode, msg = "ERROR") {
+  let msgShow = "";
+  if (err === null) {
+    msgShow = msg;
+  } else {
+    msgShow = err.message || "ERROR";
+  }
+  console.log(err);
+  res.status(statusCode).render("error", {
+    statusCode: statusCode,
+    message: msgShow,
+  });
+}
+
 app.get("/", function (req, res) {
   List.find({}, function (err, docs) {
     if (err) {
-      console.log(err);
-      res.render("error", { error: err });
+      renderErrorPage(res, err, 500);
     } else {
       res.render("home", {
         lists: docs,
@@ -38,8 +51,7 @@ app.post("/", function (req, res) {
 
   List.findOne({ slug: newListSlug }, function (err, list) {
     if (err) {
-      console.log(err);
-      res.render("error", { error: err });
+      renderErrorPage(res, err, 500);
     } else {
       if (list) {
         res.redirect("/");
@@ -50,10 +62,9 @@ app.post("/", function (req, res) {
             slug: newListSlug,
             items: [],
           },
-          function (err, doc) {
-            if (err) {
-              console.log(err);
-              res.render("error", { error: err });
+          function (err1, doc) {
+            if (err1) {
+              renderErrorPage(res, err1, 500);
             } else {
               res.redirect("/");
             }
@@ -68,8 +79,7 @@ app.post("/delete", function (req, res) {
   const checkedListId = req.body.listCheckBox;
   List.findByIdAndRemove(checkedListId, function (err) {
     if (err) {
-      console.log(err);
-      res.render("error", { error: err });
+      renderErrorPage(res, err, 500);
     } else {
       res.redirect("/");
     }
@@ -81,13 +91,12 @@ app.get("/:listSlug", function (req, res) {
 
   List.findOne({ slug: listSlug }, function (err, list) {
     if (err) {
-      console.log(err);
-      res.render("error", { error: err });
+      renderErrorPage(res, err, 500);
     } else {
       if (list) {
         res.render("list", { list: list });
       } else {
-        res.redirect("/");
+        renderErrorPage(res, err, 404, "Page not found.");
       }
     }
   });
@@ -102,8 +111,7 @@ app.post("/:listSlug", function (req, res) {
     { $push: { items: { name: newItemName } } },
     function (err, list) {
       if (err) {
-        console.log(err);
-        res.render("error", { error: err });
+        renderErrorPage(res, err, 500);
       } else {
         if (list) {
           res.redirect(`/${listSlug}`);
@@ -124,8 +132,7 @@ app.post("/:listSlug/delete", function (req, res) {
     { $pull: { items: { _id: itemId } } },
     function (err, list) {
       if (err) {
-        console.log(err);
-        res.render("error", { error: err });
+        renderErrorPage(res, err, 500);
       } else {
         if (list) {
           res.redirect(`/${listSlug}`);

@@ -1,16 +1,15 @@
 <%- include("header"); -%>
 
 <div class="box" id="heading">
-  <h1>ERROR!</h1>
+  <div>
+    <a href="/" class="home-link"><i class="fa-solid fa-chevron-left"></i></a>
+    <h1>ERROR <%= statusCode %></h1>
+  </div>
 </div>
 
 <div class="box">
-  <div class="item">    
-    <h1>Oops! Something went wrong!</h1>
-	<h2>Please, try again.</h2>
-  </div>
-  <div class="item">    
-    <p><%= error %></p>
+  <div class="item">
+    <h4 class="m-auto"><%= message %></h4>
   </div>
 </div>
 
