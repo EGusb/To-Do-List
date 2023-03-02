@@ -2,27 +2,32 @@
 
 <div class="box" id="heading">
   <div>
-    <a href="/" class="home-link"><i class="fa-solid fa-chevron-left"></i></a>
+    <a href="/" class="left-btn"><i class="fa-solid fa-chevron-left"></i></a>
     <h1><%= list.name %></h1>
-    <a href="/" class="edit-name"><i class="fa-regular fa-pen-to-square"></i></a>
+    <a href="/<%= list.slug %>/edit" class="right-btn">
+      <i class="fa-regular fa-pen-to-square"></i>
+    </a>
   </div>
 </div>
 
 <div class="box">
-  <% list.items.forEach(function(item) { %>
-  <form action="/<%= list.slug %>/item/delete" method="post">
-    <div class="item">
-      <input
-        type="checkbox"
-        name="itemId"
-        value="<%= item._id %>"
-        onChange="this.form.submit()"
-      />
-      <p><%= item.name %></p>
-    </div>
-    <input type="hidden" name="listSlug" value="<%= list.slug %>" />
-  </form>
-  <% }) %>
+  <div class="container-fluid">
+    <% list.items.forEach(function(item) { %>
+    <form action="/<%= list.slug %>/item/delete" method="post">
+      <div class="item row">
+        <input
+          type="checkbox"
+          name="itemId"
+          value="<%= item._id %>"
+          onChange="this.form.submit()"
+          class="col-1"
+        />
+        <p class="col-9"><%= item.name %></p>
+        <input type="hidden" name="listSlug" value="<%= list.slug %>" />
+      </div>
+    </form>
+    <% }) %>
+  </div>
 
   <form class="item" action="/<%= list.slug %>/item/add" method="post">
     <input

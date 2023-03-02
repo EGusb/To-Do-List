@@ -102,6 +102,22 @@ app.get("/:listSlug", function (req, res) {
   });
 });
 
+app.get("/:listSlug/edit", function (req, res) {
+  const listSlug = req.params.listSlug;
+
+  List.findOne({ slug: listSlug }, function (err, list) {
+    if (err) {
+      renderErrorPage(res, err, 500);
+    } else {
+      if (list) {
+        res.render("list-edit", { list: list });
+      } else {
+        renderErrorPage(res, err, 404, "Page not found.");
+      }
+    }
+  });
+});
+
 app.post("/:listSlug/item/add", function (req, res) {
   const newItemName = req.body.newItemName;
   const listSlug = req.params.listSlug;
