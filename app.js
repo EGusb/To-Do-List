@@ -25,8 +25,8 @@ function renderErrorPage(res, err, statusCode, msg = "ERROR") {
     msgShow = msg;
   } else {
     msgShow = err.message || msg;
+    console.log(err);
   }
-  console.log(err);
   res.status(statusCode).render("error", {
     statusCode: statusCode,
     message: msgShow,

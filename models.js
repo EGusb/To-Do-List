@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
 const dbFullPath = `${process.env.DB_URL}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
+console.log(dbFullPath);
 mongoose.connect(dbFullPath);
 
 const itemSchema = {
