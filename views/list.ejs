@@ -10,7 +10,7 @@
 
 <div class="box">
   <% list.items.forEach(function(item) { %>
-  <form action="/<%= list.slug %>/delete" method="post">
+  <form action="/<%= list.slug %>/item/delete" method="post">
     <div class="item">
       <input
         type="checkbox"
@@ -24,7 +24,7 @@
   </form>
   <% }) %>
 
-  <form class="item" action="/<%= list.slug %>" method="post">
+  <form class="item" action="/<%= list.slug %>/item/add" method="post">
     <input
       type="text"
       name="newItemName"

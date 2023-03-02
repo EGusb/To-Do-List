@@ -102,7 +102,7 @@ app.get("/:listSlug", function (req, res) {
   });
 });
 
-app.post("/:listSlug", function (req, res) {
+app.post("/:listSlug/item/add", function (req, res) {
   const newItemName = req.body.newItemName;
   const listSlug = req.params.listSlug;
 
@@ -123,7 +123,7 @@ app.post("/:listSlug", function (req, res) {
   );
 });
 
-app.post("/:listSlug/delete", function (req, res) {
+app.post("/:listSlug/item/delete", function (req, res) {
   const itemId = req.body.itemId;
   const listSlug = req.params.listSlug;
 
