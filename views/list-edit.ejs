@@ -1,0 +1,26 @@
+<%- include("header"); -%>
+
+<div class="box" id="heading">
+  <div>
+    <a href="/<%= list.slug %>" class="left-btn">
+      <i class="fa-solid fa-check"></i>
+    </a>
+    <h1><%= list.name %></h1>
+    <a href="/<%= list.slug %>" class="right-btn">
+      <i class="fa-solid fa-xmark"></i>
+    </a>
+  </div>
+</div>
+
+<div class="box">
+  <div class="container-fluid">
+    <% list.items.forEach(function(item) { %>
+    <div class="item row">
+      <div class="col-1 not-checkbox"></div>
+      <p class="col-8"><%= item.name %></p>
+    </div>
+    <% }) %>
+  </div>
+</div>
+
+<%- include("footer"); -%>
