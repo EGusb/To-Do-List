@@ -5,10 +5,31 @@
     <a href="/<%= list.slug %>" class="left-btn">
       <i class="fa-solid fa-check"></i>
     </a>
-    <h1><%= list.name %></h1>
-    <a href="/<%= list.slug %>" class="right-btn">
-      <i class="fa-solid fa-xmark"></i>
-    </a>
+    <form class="item" action="/<%= list.slug %>/item/add" method="post">
+      <input
+        type="text"
+        name="newListName"
+        placeholder=<%= list.name %>
+        required
+        autofocus
+        autocomplete="off"
+        onfocus="document.execCommand('selectAll', false, null);"
+      />
+      <!--button type="submit" name="listSlug" value="<%= list.slug %>" class="right-btn"><i class="fa-solid fa-xmark"></i></button-->
+      <a type="submit" href="/<%= list.slug %>" class="right-btn">
+        <i class="fa-solid fa-xmark"></i>
+      </a>
+    </form>
+    <!-- h1
+      contenteditable="true"
+      required
+      autofocus
+      onfocus="document.execCommand('selectAll', false, null);"
+    >
+      <-- execCommand is deprecated ->
+      <%#= list.name %>
+    </h1 -->
+    
   </div>
 </div>
 
