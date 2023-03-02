@@ -1,13 +1,11 @@
 <%- include("header"); -%>
 
 <div class="box" id="heading">
-  <div>
-    <a href="/" class="left-btn"><i class="fa-solid fa-chevron-left"></i></a>
-    <h1><%= list.name %></h1>
-    <a href="/<%= list.slug %>/edit" class="right-btn">
-      <i class="fa-regular fa-pen-to-square"></i>
-    </a>
-  </div>
+  <a href="/" class="left-btn"><i class="fa-solid fa-chevron-left"></i></a>
+  <h1><%= list.name %></h1>
+  <a href="/<%= list.slug %>/edit" class="right-btn">
+    <i class="fa-regular fa-pen-to-square"></i>
+  </a>
 </div>
 
 <div class="box">
@@ -37,6 +35,7 @@
       required
       autofocus
       autocomplete="off"
+      class="input-item"
     />
     <button type="submit" name="listSlug" value="<%= list.slug %>">+</button>
   </form>

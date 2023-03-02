@@ -89,7 +89,7 @@ button {
   border-width: 0;
 }
 
-input[type="text"] {
+.input-item {
   text-align: center;
   height: 60px;
   top: 10px;
