@@ -28,22 +28,6 @@ h1 {
   text-align: center;
 }
 
-.left-btn {
-  font-size: 2.5rem;
-  left: calc(50% - 250px);
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.right-btn {
-  font-size: 2.5rem;
-  left: calc(50% + 250px);
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
 .item {
   min-height: 70px;
   display: flex;
@@ -87,6 +71,24 @@ button {
   font-size: 30px;
   padding-bottom: 6px;
   border-width: 0;
+}
+
+.left-btn {
+  background-color: #e4e9fd;
+  font-size: 2.5rem;
+  left: calc(50% - 250px);
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.right-btn {
+  background-color: #e4e9fd;
+  font-size: 2.5rem;
+  left: calc(50% + 250px);
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .input-item {
