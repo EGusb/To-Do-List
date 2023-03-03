@@ -118,6 +118,28 @@ app.get("/:listSlug/edit", function (req, res) {
   });
 });
 
+app.post("/:listSlug/edit", function (req, res) {
+  const newListName = req.body.newListName;
+  const listId = req.body.listId;
+  const newSlug = slugify(newListName);
+
+  List.findOneAndUpdate(
+    { _id: listId },
+    { name: newListName, slug: newSlug},
+    function (err, list) {
+      if (err) {
+        renderErrorPage(res, err, 500);
+      } else {
+        if (list) {
+          res.redirect(`/${newSlug}`);
+        } else {
+          res.redirect("/");
+        }
+      }
+    }
+  );
+});
+
 app.post("/:listSlug/item/add", function (req, res) {
   const newItemName = req.body.newItemName;
   const listSlug = req.params.listSlug;
