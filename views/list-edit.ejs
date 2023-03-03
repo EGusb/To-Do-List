@@ -1,36 +1,29 @@
 <%- include("header"); -%>
 
 <div class="box" id="heading">
-  <div>
-    <a href="/<%= list.slug %>" class="left-btn">
+  <a href="#" class="left-btn">
+    <button
+      form="listEditForm"
+      type="submit"
+      name="listId"
+      value="<%= list._id %>"
+    >
       <i class="fa-solid fa-check"></i>
-    </a>
-    <form class="item" action="/<%= list.slug %>/item/add" method="post">
-      <input
-        type="text"
-        name="newListName"
-        placeholder=<%= list.name %>
-        required
-        autofocus
-        autocomplete="off"
-        onfocus="document.execCommand('selectAll', false, null);"
-      />
-      <!--button type="submit" name="listSlug" value="<%= list.slug %>" class="right-btn"><i class="fa-solid fa-xmark"></i></button-->
-      <a type="submit" href="/<%= list.slug %>" class="right-btn">
-        <i class="fa-solid fa-xmark"></i>
-      </a>
-    </form>
-    <!-- h1
-      contenteditable="true"
+    </button>
+  </a>
+  <form action="/<%= list.slug %>/edit" method="post" id="listEditForm">
+    <input
+      type="text"
+      name="newListName"
       required
       autofocus
+      autocomplete="off"
       onfocus="document.execCommand('selectAll', false, null);"
-    >
-      <-- execCommand is deprecated ->
-      <%#= list.name %>
-    </h1 -->
-    
-  </div>
+    />
+  </form>
+  <a href="/<%= list.slug %>" class="right-btn">
+    <i class="fa-solid fa-xmark"></i>
+  </a>
 </div>
 
 <div class="box">
@@ -42,6 +35,7 @@
     </div>
     <% }) %>
   </div>
+  <div class="item"></div>
 </div>
 
 <%- include("footer"); -%>
