@@ -10,13 +10,15 @@
   >
     <i class="fa-solid fa-check"></i>
   </button>
-  <form action="/<%= list.slug %>/edit" method="post" id="listEditForm">
+  <form action="/<%= list.slug %>/edit" method="post" id="listEditForm" class="top-form">
     <input
       type="text"
       name="newListName"
+      class="top-input"
       required
       autofocus
       autocomplete="off"
+      value="<%= list.name %>"
       onfocus="document.execCommand('selectAll', false, null);"
     />
   </form>
@@ -30,7 +32,7 @@
     <% list.items.forEach(function(item) { %>
     <div class="item row">
       <div class="col-1 not-checkbox"></div>
-      <p class="col-8"><%= item.name %></p>
+      <p class="col-9"><%= item.name %></p>
     </div>
     <% }) %>
   </div>

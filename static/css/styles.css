@@ -16,9 +16,10 @@ h1 {
 
 .box {
   max-width: 400px;
+  min-height: 60px;
   margin: 50px auto;
   background: white;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
   position: relative;
 }
@@ -124,4 +125,21 @@ a {
   color: #a683e3;
   font-weight: 400;
   text-decoration: none;
+}
+
+.top-form {
+  background-color: #e4e9fd;
+  color: #a683e3;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.top-input {
+  border: 0;
+  background-color: #a683e3;
+  margin: 0;
+  font-size: xx-large;
+  text-align: center;
 }
