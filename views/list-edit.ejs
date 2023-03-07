@@ -1,16 +1,15 @@
 <%- include("header"); -%>
 
 <div class="box" id="heading">
-  <a href="#" class="left-btn">
-    <button
-      form="listEditForm"
-      type="submit"
-      name="listId"
-      value="<%= list._id %>"
-    >
-      <i class="fa-solid fa-check"></i>
-    </button>
-  </a>
+  <button
+    form="listEditForm"
+    type="submit"
+    name="listId"
+    value="<%= list._id %>"
+    class="left-btn"
+  >
+    <i class="fa-solid fa-check"></i>
+  </button>
   <form action="/<%= list.slug %>/edit" method="post" id="listEditForm">
     <input
       type="text"
