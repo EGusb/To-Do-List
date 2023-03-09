@@ -125,7 +125,7 @@ app.post("/:listSlug/edit", function (req, res) {
 
   List.findOneAndUpdate(
     { _id: listId },
-    { name: newListName, slug: newSlug},
+    { name: newListName, slug: newSlug },
     function (err, list) {
       if (err) {
         renderErrorPage(res, err, 500);
@@ -182,25 +182,31 @@ app.post("/:listSlug/item/delete", function (req, res) {
   );
 });
 
-// HTTP config
-const http_port = process.env.HTTP_PORT || 80;
-const http_server = http.createServer(app);
-
 // HTTPS config
-const options = {
-  key: fs.readFileSync("./server.key"),
-  cert: fs.readFileSync("./server.cert"),
-};
-
-const https_port = process.env.HTTPS_PORT || 443;
-const https_server = https.createServer(options, app);
-
+const httpsPort = process.env.HTTPS_PORT || 443;
 const hostname = process.env.HOST || "localhost";
+const fullHttpsUrl = `https://${hostname}:${httpsPort}`;
+const httpsServer = https.createServer(
+  {
+    key: fs.readFileSync("./server.key"),
+    cert: fs.readFileSync("./server.cert"),
+  },
+  app
+);
 
-http_server.listen(http_port, hostname, function () {
-  console.log(`HTTP server started on http://${hostname}:${http_port}`);
+httpsServer.listen(httpsPort, hostname, function () {
+  console.log(`HTTPS server started on ${fullHttpsUrl}`);
 });
 
-https_server.listen(https_port, hostname, function () {
-  console.log(`HTTPS server started on https://${hostname}:${https_port}`);
+// HTTP config
+const httpApp = express();
+httpApp.all("*", function (req, res) {
+  res.redirect(301, fullHttpsUrl);
+});
+const httpPort = process.env.HTTP_PORT || 80;
+const fullHttpUrl = `http://${hostname}:${httpPort}`;
+
+const httpServer = http.createServer(httpApp);
+httpServer.listen(httpPort, hostname, function () {
+  console.log(`HTTP  server started on ${fullHttpUrl}`);
 });
